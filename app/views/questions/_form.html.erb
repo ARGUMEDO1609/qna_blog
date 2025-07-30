@@ -1,0 +1,22 @@
+<%= form_with model: @question, class: "space-y-4" do |f| %>
+  <div>
+    <%= f.label :title, "Título", class: "block text-sm font-medium" %>
+    <%= f.text_field :title, class: "mt-1 w-full border rounded p-2" %>
+    <% @question.errors.full_messages_for(:title).each do |msg| %>
+      <p class="text-red-600 text-sm"><%= msg %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :body, "Contenido", class: "block text-sm font-medium" %>
+    <%= f.text_area :body, rows: 8, class: "mt-1 w-full border rounded p-2" %>
+    <% @question.errors.full_messages_for(:body).each do |msg| %>
+      <p class="text-red-600 text-sm"><%= msg %></p>
+    <% end %>
+  </div>
+
+  <div class="flex gap-2">
+    <%= f.submit class: "px-4 py-2 rounded bg-blue-600 text-white" %>
+    <%= link_to "Cancelar", (@question.persisted? ? @question : questions_path), class: "px-4 py-2 rounded border" %>
+  </div>
+<% end %>

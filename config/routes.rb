@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get "likes/create"
+  get "likes/destroy"
+  get "answers/create"
+  get "answers/edit"
+  get "answers/update"
+  get "answers/destroy"
   get "questions/index"
   get "questions/show"
   get "questions/new"

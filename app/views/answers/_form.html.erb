@@ -3,11 +3,12 @@
   <%= form_with model: [question, answer], class: "space-y-3" do |f| %>
     <div>
       <%= f.label :body, "Tu respuesta", class: "block text-sm font-medium" %>
-      <%= f.text_area :body, rows: 5, class: "mt-1 w-full border rounded p-2" %>
+      <%= f.text_area :body, rows: 6, class: "textarea" %>
       <% answer.errors.full_messages_for(:body).each do |msg| %>
         <p class="text-red-600 text-sm"><%= msg %></p>
       <% end %>
     </div>
-    <%= f.submit "Publicar", class: "px-4 py-2 rounded bg-blue-600 text-white" %>
+    <%= f.submit "Publicar", class: "btn btn-primary" %>
   <% end %>
 <% end %>
+

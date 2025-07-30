@@ -1,0 +1,38 @@
+<%# locals: likable %>
+<%= turbo_frame_tag dom_id(likable, :likes) do %>
+  <div class="flex items-center gap-2">
+    <% if user_signed_in? %>
+      <% if likable.liked_by?(current_user) %>
+        <% if likable.is_a?(Question) %>
+          <%= button_to "Quitar Me gusta (#{likable.likes.size})",
+                unlike_question_path(likable),
+                method: :delete,
+                data: { turbo: true },
+                class: "px-3 py-1 rounded border" %>
+        <% else %>
+          <%= button_to "Quitar Me gusta (#{likable.likes.size})",
+                unlike_answer_path(likable),
+                method: :delete,
+                data: { turbo: true },
+                class: "px-2 py-1 rounded border text-sm" %>
+        <% end %>
+      <% else %>
+        <% if likable.is_a?(Question) %>
+          <%= button_to "Me gusta (#{likable.likes.size})",
+                like_question_path(likable),
+                method: :post,
+                data: { turbo: true },
+                class: "px-3 py-1 rounded bg-pink-600 text-white" %>
+        <% else %>
+          <%= button_to "Me gusta (#{likable.likes.size})",
+                like_answer_path(likable),
+                method: :post,
+                data: { turbo: true },
+                class: "px-2 py-1 rounded bg-pink-600 text-white text-sm" %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <span class="text-sm text-gray-600">Inicia sesión para dar Me gusta.</span>
+    <% end %>
+  </div>
+<% end %>

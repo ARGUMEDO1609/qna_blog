@@ -1,0 +1,19 @@
+
+<%= turbo_frame_tag dom_id(answer) do %>
+  <div class="bg-white border rounded p-4">
+    <div class="flex items-center justify-between">
+      <span class="text-sm text-gray-500">por <%= answer.user.email %></span>
+      <div class="flex items-center gap-2">
+        <%= render "likes/likes", likable: answer %>
+
+        <% if user_signed_in? && answer.user == current_user %>
+          <%= link_to "Editar", edit_answer_path(answer), class: "px-2 py-1 rounded border text-sm" %>
+          <%= button_to "Eliminar", answer, method: :delete,
+                data: { turbo_confirm: "¿Eliminar respuesta?" },
+                class: "px-2 py-1 rounded border text-sm text-red-700" %>
+        <% end %>
+      </div>
+    </div>
+    <p class="mt-2 whitespace-pre-line"><%= answer.body %></p>
+  </div>
+<% end %>

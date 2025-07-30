@@ -1,0 +1,16 @@
+<%# locals: answer %>
+<%= turbo_frame_tag dom_id(answer) do %>
+  <%= form_with model: answer, class: "space-y-3" do |f| %>
+    <div>
+      <%= f.label :body, "Editar respuesta", class: "block text-sm font-medium" %>
+      <%= f.text_area :body, rows: 6, class: "mt-1 w-full border rounded p-2" %>
+      <% answer.errors.full_messages_for(:body).each do |msg| %>
+        <p class="text-red-600 text-sm"><%= msg %></p>
+      <% end %>
+    </div>
+    <div class="flex gap-2">
+      <%= f.submit "Guardar", class: "px-4 py-2 rounded bg-blue-600 text-white" %>
+      <%= link_to "Cancelar", answer.question, data: { turbo: false }, class: "px-4 py-2 rounded border" %>
+    </div>
+  <% end %>
+<% end %>

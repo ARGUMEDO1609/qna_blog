@@ -1,31 +1,26 @@
+# config/routes.rb
 Rails.application.routes.draw do
-  get "likes/create"
-  get "likes/destroy"
-  get "answers/create"
-  get "answers/edit"
-  get "answers/update"
-  get "answers/destroy"
-  get "questions/index"
-  get "questions/show"
-  get "questions/new"
-  get "questions/edit"
-  get "questions/create"
-  get "questions/update"
-  get "questions/destroy"
   devise_for :users
 
   root "questions#index"
 
   resources :questions do
-    resources :answers, only: [:create, :edit, :update, :destroy]
-    # Likes para preguntas
-    post   "like",   to: "likes#create",  defaults: { likable: "Question" }
-    delete "unlike", to: "likes#destroy", defaults: { likable: "Question" }
+    # Likes de la PREGUNTA -> helpers: like_question_path / unlike_question_path
+    member do
+      post   :like,   to: "likes#create",  defaults: { likable: "Question" }
+      delete :unlike, to: "likes#destroy", defaults: { likable: "Question" }
+    end
+
+    # Respuestas anidadas (crear/editar/actualizar/eliminar).
+    # Con shallow: true podrás usar edit_answer_path(@answer) y delete a secas sin question_id.
+    resources :answers, shallow: true, only: [:create, :edit, :update, :destroy]
   end
 
-  # Likes para respuestas (shallow)
+  # Likes de la RESPUESTA -> helpers: like_answer_path / unlike_answer_path
   resources :answers, only: [] do
-    post   "like",   to: "likes#create",  defaults: { likable: "Answer" }
-    delete "unlike", to: "likes#destroy", defaults: { likable: "Answer" }
+    member do
+      post   :like,   to: "likes#create",  defaults: { likable: "Answer" }
+      delete :unlike, to: "likes#destroy", defaults: { likable: "Answer" }
+    end
   end
 end
